@@ -1,0 +1,29 @@
+version: '3.7'
+
+volumes:
+  gems:
+
+services:
+  postgres:
+    image: postgres:11.8-alpine
+    environment:
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - 5961:5432
+
+  web:
+    build: .
+    depends_on:
+      - postgres
+    ports:
+      - 3003:3003
+    volumes:
+      - gems:/usr/local/bundle
+      - .:/opt/app:cached
+    environment:
+      DATABASE_URL: postgres://pguser:postgres@postgres/app_development1
+      TIME_ZONE: 'Brasilia'
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3003 -b '0.0.0.0'"

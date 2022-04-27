@@ -1,0 +1,19 @@
+AllCops:
+  NewCops: enable
+  Exclude:
+    - "bin/**/*"
+    - "vendor/**/*"
+    - "db/**/*"
+    - "config/**/*"
+
+Style/AsciiComments:
+  Enabled: true
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Naming/MemoizedInstanceVariableName:
+  Enabled: false
